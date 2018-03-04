@@ -38,11 +38,13 @@ class Controller {
     await this.checkKeyValidity();
     const item = await this.model.findOne({key});
 
-    if (!item)
+    if (!item) {
       throw Boom.notFound('Cache item not found');
+    }
 
-    if (!payload)
+    if (!payload) {
       throw Boom.preconditionFailed('Cache payload not found');
+    }
 
     await item.update({payload});
 
@@ -52,11 +54,13 @@ class Controller {
 
   async delete(key) {
     await this.checkKeyValidity();
+
     if (key) {
       const item = await this.model.findOne({key});
 
-      if (!item)
+      if (!item) {
         throw Boom.notFound('Cache item not found');
+      }
 
       await item.remove();
 
@@ -78,8 +82,9 @@ class Controller {
       }
     });
 
-    if (items.n > 0)
+    if (items.n > 0) {
       logger.info(`Deleted ${items.n} number of documents`);
+    }
 
     return items;
   }
