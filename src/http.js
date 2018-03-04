@@ -37,6 +37,8 @@ class Server {
 
   setRoutes() {
     this.app.get('/', (req, res) => res.json({status: 200}));
+
+    this.app.use('/cache', require('./components/cache/router'));
   }
 
   setErrorHandlers() {
