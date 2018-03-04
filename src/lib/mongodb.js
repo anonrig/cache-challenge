@@ -1,20 +1,18 @@
-const mongoose = require('mongoose');
-
-
 class MongoDB {
   constructor() {
+    this.mongoose = require('mongoose');
     this.instance = null;
   }
 
   init() {
-    if (!this.instance) {
+    if (this.instance) {
       return Promise.resolve();
     }
 
     return new Promise((resolve, reject) => {
-      this.instance = mongoose.connect(process.env.MONGODB);
-      this.instance.connection.once('error', reject);
-      this.instance.connection.once('open', resolve);
+      this.instance = this.mongoose.connect(process.env.MONGODB);
+      this.mongoose.connection.once('error', reject);
+      this.mongoose.connection.once('open', resolve);
     });
   }
 }
